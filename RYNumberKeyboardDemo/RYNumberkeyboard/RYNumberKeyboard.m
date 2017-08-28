@@ -77,6 +77,13 @@
             dotBtn.hidden = YES;
             break;
         }
+        // 电话键盘
+        case RYPhoneInputType:
+        {
+            xBtn.hidden = YES;
+            dotBtn.hidden = YES;
+            break;
+        }
         // 数字键盘
         default:
         {
@@ -126,8 +133,27 @@
             NSString *text = [NSString stringWithFormat:@"%ld",sender.tag - 1000];
             [self.textInput insertText:text];
             
-            if(self.interval && (self.textInput.text.length+1) % ([self.interval integerValue] + 1) == 0)
-                [self.textInput insertText:@" "];
+            if(self.inputType == RYPhoneInputType){
+                //电话号码
+                NSString *orig = [self.textInput.text stringByReplacingOccurrencesOfString:@"-" withString:@""];
+                if (orig.length >= 11) {
+                    orig = [orig substringToIndex:11];
+                }
+                
+                if (orig.length >= 7) {
+                    orig = [NSString stringWithFormat:@"%@-%@-%@",[orig substringToIndex:3],[orig substringWithRange:NSMakeRange(3, 4)],[orig substringFromIndex:7] ];
+                    
+                }else   if (orig.length >= 4) {
+                    orig = [NSString stringWithFormat:@"%@-%@",[orig substringToIndex:3],[orig substringFromIndex:3] ];
+                }
+                
+                self.textInput.text = orig;
+                
+            }else{
+                
+                if(self.interval && (self.textInput.text.length+1) % ([self.interval integerValue] + 1) == 0)
+                    [self.textInput insertText:@" "];
+            }
         }
             break;
     }

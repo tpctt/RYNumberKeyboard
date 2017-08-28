@@ -15,6 +15,8 @@ typedef NS_ENUM(NSUInteger, RYInputType) {
     RYIntInputType,        // 整数键盘
     RYFloatInputType,      // 浮点数键盘
     RYIDCardInputType,     // 身份证键盘
+    RYPhoneInputType,     // 电话号码键盘
+
 };
 
 @interface RYNumberKeyboard : UIView
